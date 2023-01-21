@@ -1,0 +1,25 @@
+{
+  "name": "telegram-bot-react-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Izvra4ok/telegram-bot-react-course.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Izvra4ok/telegram-bot-react-course/issues"
+  },
+  "homepage": "https://github.com/Izvra4ok/telegram-bot-react-course#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.61.0",
+    "nodemon": "^2.0.20"
+  }
+}
