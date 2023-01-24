@@ -19,7 +19,11 @@
   },
   "homepage": "https://github.com/Izvra4ok/telegram-bot-react-course#readme",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "node-telegram-bot-api": "^0.61.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.28.0"
   }
 }

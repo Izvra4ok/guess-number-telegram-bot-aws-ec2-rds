@@ -1,7 +1,23 @@
 const TelegramApi = require("node-telegram-bot-api")
 const {gameOptions, againOptions} = require("./options")
+require("dotenv").config()
 
-const token = ""
+
+// const sequelize = require("./database")
+//
+// sequelize
+//     .authenticate()
+//     .then(() => {
+//         console.log('Connection has been established successfully.');
+//     })
+//     .catch((err) => {
+//         console.log('Unable to connect to the database:', err);
+//     });
+
+
+// const UserModel = require("./models")
+
+const token = process.env.token
 
 const bot = new TelegramApi(token, {polling: true})
 
@@ -15,7 +31,7 @@ const startGame = async (chatId) => {
 }
 
 
-const start = () => {
+const start = async () => {
 
     bot.setMyCommands([
         {command: "/start", description: "Hello my friend.",},
