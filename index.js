@@ -9,7 +9,6 @@ const UserModel = require("./models")
 const token = process.env.token
 
 const bot = new TelegramApi(token, {polling: true})
-
 const chats = {};
 
 const startGame = async (chatId) => {
@@ -19,13 +18,14 @@ const startGame = async (chatId) => {
     await bot.sendMessage(chatId, "Guess it!", gameOptions)
 };
 
+
 const start = async () => {
 
     try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
     } catch (error) {
-        console.error('Unable to connect to the database:', error);
+        console.error(`Unable to connect to the database: ${error}`, error);
     }
 
     bot.setMyCommands([
@@ -37,16 +37,16 @@ const start = async () => {
     bot.on("message", async msg => {
 
         const text = msg.text;
-        const chatId = msg.chat.id
+        const chatId = msg.chat.id;
 
         try {
             if (text === "/start") {
-                await UserModel.create({chatId})
+                await UserModel.sync({chatId})
                 await bot.sendSticker(chatId, "https://tlgrm.eu/_/stickers/039/535/0395358a-70e2-437f-9459-4101b904ede5/192/1.webp")
                 return bot.sendMessage(chatId, "You're welcome.")
             }
             if (text === "/info") {
-                const user = await UserModel.findOne({where: {chatId}});
+                const user = await UserModel.findOne({where: {chatId: chatId} });
                 await bot.sendSticker(chatId, "https://tlgrm.eu/_/stickers/039/535/0395358a-70e2-437f-9459-4101b904ede5/192/4.webp")
                 return bot.sendMessage(chatId, `Your name is ${msg.from.first_name} ${msg.from.last_name}. В игре у тебя правильных ответов ${user.right}, а неправильных ${user.wrong}`)
             }
@@ -55,7 +55,7 @@ const start = async () => {
             }
             return bot.sendMessage(chatId, "I don't understand you.");
         } catch (e) {
-            return bot.sendMessage(chatId, "Something wrong")
+            return bot.sendMessage(chatId, `Something wrong in callback_query: ${e}.`,e)
         }
 
     })
@@ -64,11 +64,12 @@ const start = async () => {
         const data = msg.data
         const chatId = msg.message.chat.id
 
-        try {
+
             if (data === "/again") {
                 return startGame(chatId)
             }
-            const user = await UserModel.findOne({where: {chatId}});
+        try{
+            const user = await UserModel.findOne({where: {chatId: chatId} });
             user.right += 1;
             await bot.sendMessage(chatId, `You chose the number ${data}.`)
 
@@ -80,8 +81,9 @@ const start = async () => {
             }
             await user.save();
         } catch (e) {
-            console.log("Something wrong", e)
+            console.log(`Something wrong in callback_query: ${e}`,e)
         }
+
     })
 }
 
