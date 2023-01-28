@@ -1,5 +1,5 @@
 {
-  "name": "telegram-bot",
+  "name": "guess-number-telegram-bot-aws-ec2-rds",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Izvra4ok/telegram-bot-react-course.git"
+    "url": "git+https://github.com/Izvra4ok/guess-number-telegram-bot-aws-ec2-rds.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Izvra4ok/telegram-bot-react-course/issues"
+    "url": "https://github.com/Izvra4ok/guess-number-telegram-bot-aws-ec2-rds/issues"
   },
-  "homepage": "https://github.com/Izvra4ok/telegram-bot-react-course#readme",
+  "homepage": "https://github.com/Izvra4ok/guess-number-telegram-bot-aws-ec2-rds#readme",
   "dependencies": {
     "dotenv": "^16.0.3",
     "node-telegram-bot-api": "^0.61.0",
