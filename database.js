@@ -7,7 +7,7 @@ module.exports = new Sequelize(process.env.DB_DB, process.env.DB_USER, process.e
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         logging: console.log,
-        dialect: "postgres",
+        dialect: "mysql",
         ssl: "Amazon RDS",
     }
 )
