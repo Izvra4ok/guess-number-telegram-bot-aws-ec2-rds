@@ -61,35 +61,30 @@ const start = async () => {
         } catch (e) {
             return bot.sendMessage(chatId, `Something wrong in bot_on.message: ${e}, ${chatId}.`, e);
         }
-    })
+})
 
     bot.on("callback_query", async msg => {
-
         const data = msg.data;
-        const chatId = msg.message.chat.id;
-
-        try {
-            const user = await UserModel.findOne({where: {chatId}});
-            await bot.sendMessage(chatId, `You chose the number ${data}.`);
-
-            if (data == chats[chatId]) {
-                user.right += 1;
-                await bot.sendMessage(chatId, `Congratulations! You guessed the number ${chats[chatId]}.`, againOptions);
-                await bot.sendSticker(chatId, "https://tlgrm.eu/_/stickers/039/535/0395358a-70e2-437f-9459-4101b904ede5/192/3.webp");
-            } else {
-                user.wrong += 1;
-                await bot.sendMessage(chatId, `You didn't guess the number. Bot guessed the number ${chats[chatId]}`, againOptions);
-                await bot.sendSticker(chatId, "https://tlgrm.eu/_/stickers/039/535/0395358a-70e2-437f-9459-4101b904ede5/192/11.webp");
-            }
-            await user.save();
-
-            if (data === "/again") {
-                return startGame(chatId)
-            }
-        } catch (e) {
-            console.log(`Something wrong in callback_query: ${e}`, e)
+	const chatId = msg.message.chat.id;
+        if (data === '/again') {
+            return startGame(chatId)
         }
-    })
+        const user = await UserModel.findOne({where:{chatId}})
+try{
+        if (data == chats[chatId]) {
+            user.right += 1;
+            await bot.sendSticker(chatId, "https://tlgrm.eu/_/stickers/039/535/0395358a-70e2-437f-9459-4101b904ede5/192/3.webp");
+            await bot.sendMessage(chatId, `Congratulations! You guessed the number ${chats[chatId]}.`, againOptions);
+        } else {
+            user.wrong += 1;	
+            await bot.sendSticker(chatId, "https://tlgrm.eu/_/stickers/039/535/0395358a-70e2-437f-9459-4101b904ede5/192/11.webp");
+            await bot.sendMessage(chatId, `You didn't guess the number. Bot guessed the number ${chats[chatId]}.`, againOptions);
+        }
+        await user.save();
+} catch (e) {
+        console.log(`Something wrong in callback_query: ${e}`, e)
 }
+    })
+}       
 
 start();
